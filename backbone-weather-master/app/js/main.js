@@ -1,39 +1,38 @@
-(function () {
-  
+(function () {  
   var Forecast,
       Forecasts,
       SearchView,
       ForecastView,
       ForecastItemView;
       
-  Forecast = Backbone.Model.extend({
-    url: function () {
-        return "http://api.wunderground.com/api/7eaec3b21b154448/conditions/q/" + this.get("zip") + ".json";  
-    },
-    sync: function (method, model, options) {
-        options.dataType = 'jsonp';
-        return Backbone.sync(method, model, options);
-    },
-    validate: function (options) {
-        if (!options.zip) {
-          return "Please enter a zipcode"
-        }
-    },
-    parse function (data, request) {
-      var observation = data.current_observation;
-      return {
-        id: observation.display_location.zip,
-        url: observation.icon_url,
-        state: observation.display_location.state_name,
-        zip: observation.display_location.zip,
-        city: observation.display_location.city,
-        temperature: observation.temp_f,
-        wind: observation.wind_mph,
-        feelslike: observation.feelslike_f,
-        image: observation.image.url
-      }
-    }
-  });    
+Forecast = Backbone.Model.extend({
+		url: function () {
+			return "http://api.wunderground.com/api/7eaec3b21b154448/conditions/q/" + this.get("zip") + ".json";
+		},
+		sync: function (method, model, options) {
+			options.dataType = 'jsonp';
+			return Backbone.sync(method, model, options);
+		},
+		validate: function (options) {
+			if (!options.zip) {
+				return "Please enter a zip code"
+			}
+		},
+		parse: function (data, request) {
+			var observation = data.current_observation;
+			return {
+				id: observation.display_location.zip,
+				url: observation.icon_url,
+				state: observation.display_location.state_name,
+				zip: observation.display_location.zip,
+				city: observation.display_location.city,
+				temperature: observation.temp_f,
+				wind: observation.wind_mph,
+				feelslike: observation.feelslike_f,
+				image: observation.image.url
+			}
+		}
+	});	    
   
   Forecasts = Backbone.Collection.extend({
     model: Forecast,
@@ -54,13 +53,13 @@
       
       this.model = new Forecast();
       
-      if (this.model.set({zip: this.$('zip').val()})) {
+      if (this.model.set({zip: this.$('#zip').val()})) {
           this.collection.add(this.model);
-      }
-      clear: function (){
+        }
+    },
+      clear: function () {
         this.$('#zip').val('');
       }
-    };
     
   });
   
@@ -131,7 +130,7 @@
   });
   
   var forecastView = new ForecastView({
-    el: $('output'),
+    el: $('#output'),
     collection: forecasts
   });
   
