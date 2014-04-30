@@ -58,7 +58,7 @@
     DebutShots.list_name = 'debuts';
     // All ShotsList gets updated list name
     AllShots = new ShotsList;
-    AllShots.list_name = 'all shots';
+    AllShots.list_name = 'everyone';
 
 
     ShotView = Backbone.View.extend({
@@ -75,11 +75,12 @@
     // Backbone views are almost more convention than they are code — they don't determine anything about your HTML or CSS for you, and can be used with any JavaScript templating library. The general idea is to organize your interface into logical views, backed by models, each of which can be updated independently when the model changes, without having to redraw the page.
     AppView = Backbone.View.extend({
         // Backbone View Specific Properties
-        el: $('#container'),
+        el: $('#container'),        
         events: {
             "click #loadmore": "loadMore",
             "click #header li": "changeCurrentList"
         },
+        
         initialize: function() {
             _.each(this.lists, function(list) {
                 this.listenTo(list, 'add', this.addOne);
@@ -92,6 +93,7 @@
                 }
             }, this);
         },
+        
         render: function(el) {
             this.$("#shots").html("");
             this.currentList.each(this.addOne);
