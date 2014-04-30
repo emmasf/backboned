@@ -44,6 +44,10 @@
             return 'http://api.dribbble.com/shots/' + this.list_name + '?page=' + this.page + '&per_page=' + this.per_page;
         }
     });
+    
+    // model is required by Backbone.Collection...
+    // sync, parse, url are backbone specific
+    // others are specific to the dribbble api
 
 
     // Types of ShotsList
@@ -54,7 +58,7 @@
     DebutShots.list_name = 'debuts';
     // All ShotsList gets updated list name
     AllShots = new ShotsList;
-    AllShots.list_name = 'everyone';
+    AllShots.list_name = 'all shots';
 
 
     ShotView = Backbone.View.extend({
